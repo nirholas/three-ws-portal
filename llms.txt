@@ -1,0 +1,19 @@
+# @three-ws/portal
+
+> Turn any website into a walkable 3D world. Reads a page's real structure and lays out a city from it: sections become buildings, links become doors, images become billboards. Pure layout in JS, a client for the three.ws Portal API, a CLI, and an MCP server.
+
+@three-ws/portal is a JavaScript library from three.ws. Install: `npx -y @three-ws/portal`.
+
+## Docs
+
+- [README](https://github.com/nirholas/three-ws-portal/blob/main/README.md): install, configuration, full reference
+- [Documentation site](https://nirholas.github.io/three-ws-portal/): the README as a web page
+- [Full text for LLMs](https://nirholas.github.io/three-ws-portal/llms-full.txt): README inlined
+- [AGENTS.md](https://github.com/nirholas/three-ws-portal/blob/main/AGENTS.md): guidance for coding agents
+
+## Project
+
+- [Source](https://github.com/nirholas/three-ws-portal)
+- [npm](https://www.npmjs.com/package/@three-ws/portal)
+- [three.ws](https://three.ws): the platform this is part of
+- [Issues](https://github.com/nirholas/three-ws-portal/issues)

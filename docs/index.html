@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@three-ws/portal: Turn any website into a walkable 3D world</title>
+<meta name="description" content="Turn any website into a walkable 3D world. Reads a page&#39;s real structure and lays out a city from it: sections become buildings, links become doors, images become billboards. Pure layout in JS, a client for the three.ws Portal API, a CLI, and an MCP server.">
+<link rel="canonical" href="https://nirholas.github.io/three-ws-portal/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="three.ws">
+<meta property="og:title" content="@three-ws/portal">
+<meta property="og:description" content="Turn any website into a walkable 3D world. Reads a page&#39;s real structure and lays out a city from it: sections become buildings, links become doors, images become billboards. Pure layout in JS, a client for the three.ws Portal API, a CLI, and an MCP server.">
+<meta property="og:url" content="https://nirholas.github.io/three-ws-portal/">
+<meta property="og:image" content="https://nirholas.github.io/three-ws-portal/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@three-ws/portal">
+<meta name="twitter:description" content="Turn any website into a walkable 3D world. Reads a page&#39;s real structure and lays out a city from it: sections become buildings, links become doors, images become billboards. Pure layout in JS, a client for the three.ws Portal API, a CLI, and an MCP server.">
+<meta name="twitter:image" content="https://nirholas.github.io/three-ws-portal/og.png">
+<meta name="keywords" content="3d, webgl, gltf, glb, sitemap, visualization, web, crawler, mcp, model-context-protocol, three.ws, ai-agents">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<link rel="icon" href="https://three.ws/three-ws-mcp-icon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@three-ws/portal","description":"Turn any website into a walkable 3D world. Reads a page's real structure and lays out a city from it: sections become buildings, links become doors, images become billboards. Pure layout in JS, a client for the three.ws Portal API, a CLI, and an MCP server.","codeRepository":"https://github.com/nirholas/three-ws-portal","programmingLanguage":"JavaScript","license":"https://spdx.org/licenses/Apache-2.0.html","version":"0.1.0","url":"https://nirholas.github.io/three-ws-portal/","author":{"@type":"Organization","name":"three.ws","url":"https://three.ws"},"keywords":"3d, webgl, gltf, glb, sitemap, visualization, web, crawler, mcp, model-context-protocol, three.ws, ai-agents"}</script>
+<style>:root{--bg:#fff;--fg:#111418;--mut:#586069;--line:#e3e6ea;--acc:#2563eb;--code:#f4f6f8;--card:#fafbfc}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#232830;--acc:#6ea0ff;--code:#14181d;--card:#10141a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+header.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;text-decoration:none;color:var(--fg)}
+.bar nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+.bar nav a{color:var(--mut);text-decoration:none;transition:color .15s}.bar nav a:hover{color:var(--fg)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 16px 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--mut);max-width:70ch;font-size:18px;margin:0 0 24px}
+.install{display:flex;align-items:center;gap:8px;max-width:620px;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;font:14px ui-monospace,SFMono-Regular,Menlo,monospace}
+.install button{border:0;background:var(--acc);color:#fff;border-radius:7px;padding:8px 14px;font:600 13px system-ui;cursor:pointer;transition:transform .12s,opacity .12s}
+.install button:hover{opacity:.9}.install button:active{transform:scale(.96)}
+.cta{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cta a{padding:9px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--fg);transition:border-color .15s,transform .15s}
+.cta a:hover{border-color:var(--acc);transform:translateY(-1px)}.cta a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{max-width:1100px;margin:0 auto;padding:8px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+.toc{position:sticky;top:76px;align-self:start;font-size:14px;border-left:1px solid var(--line);padding-left:16px}
+.toc p{margin:0 0 8px;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:6px 0}.toc a{color:var(--mut);text-decoration:none}.toc a:hover{color:var(--fg)}
+main{min-width:0;overflow-wrap:anywhere}main pre code{overflow-wrap:normal}main img{max-width:100%;height:auto}
+main h2{margin-top:2.2em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+.anchor{margin-left:-1.1em;padding-right:.4em;text-decoration:none;opacity:0;color:var(--mut)}h2:hover .anchor,h3:hover .anchor,h4:hover .anchor{opacity:1}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font:0.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--code);padding:.15em .35em;border-radius:5px}pre code{background:none;padding:0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}th{background:var(--card)}
+blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--line);color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.foot-in{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+<a class="brand" href="https://nirholas.github.io/three-ws-portal/">@three-ws/portal</a>
+<nav aria-label="Project links"><a href="https://github.com/nirholas/three-ws-portal">GitHub</a><a href="https://www.npmjs.com/package/@three-ws/portal">npm</a><a href="llms.txt">llms.txt</a><a href="https://three.ws">three.ws</a></nav>
+</div></header>
+<section class="hero">
+<h1>@three-ws/portal</h1>
+<p>Turn any website into a walkable 3D world. Reads a page&#39;s real structure and lays out a city from it: sections become buildings, links become doors, images become billboards. Pure layout in JS, a client for the three.ws Portal API, a CLI, and an MCP server.</p>
+<div class="install" role="group" aria-label="Install command"><code>npx -y @three-ws/portal</code><button type="button" data-copy="npx -y @three-ws/portal">Copy</button></div>
+<div class="cta"><a class="pri" href="https://github.com/nirholas/three-ws-portal">View on GitHub</a><a href="https://github.com/nirholas/three-ws-portal/stargazers">Star the repo</a></div>
+</section>
+<div class="layout">
+<main id="content"><div align="center"><h1>@three-ws/portal</h1>
+<p><strong>Turn any website into a walkable 3D world.</strong></p>
+<p>Paste an address; get a place. Every section becomes a building sized by what it
+says, every link becomes a door you can step through, every image becomes a
+billboard, every code block becomes a monolith. Walk it in the browser, download
+it as a <code>.glb</code>, embed it in your own page, or hand it to an agent over MCP.</p>
+<p><a href="#quick-start">Quick start</a> · <a href="#how-a-page-becomes-a-place">How a page becomes a place</a> · <a href="#api">API</a> · <a href="#cli">CLI</a> · <a href="#mcp">MCP</a> · <a href="#manners">Manners</a></p>
+</div><hr>
+<h2 id="why"><a class="anchor" href="#why" aria-label="Link to this section">#</a>Why</h2>
+<p>Every tool that &quot;visualizes a website&quot; draws a node graph. A graph tells you a
+site has 40 pages; it does not tell you which section carries the weight, where
+the dead ends are, or what it feels like to arrive. A <strong>place</strong> does, because
+size, distance and direction are things people read without being taught.</p>
+<p>Portal turns the page you already have into that place, deterministically, with
+no model in the loop: the same URL always builds the same city, so a link you
+share opens the world you walked.</p>
+<h2 id="quick-start"><a class="anchor" href="#quick-start" aria-label="Link to this section">#</a>Quick start</h2>
+<pre><code class="language-bash">npm install @three-ws/portal
+</code></pre>
+<pre><code class="language-js">import { fetchWorld, describeWorld } from &#39;@three-ws/portal&#39;;
+
+const { world } = await fetchWorld(&#39;example.com&#39;);
+console.log(describeWorld(world));
+// { host: &#39;example.com&#39;, sections: 2, doors: 1, tallest: { name: &#39;Example Domain&#39;, … } }
+</code></pre>
+<p>Put a live, walkable world on your own page:</p>
+<pre><code class="language-js">import { mountPortal } from &#39;@three-ws/portal&#39;;
+
+mountPortal(document.querySelector(&#39;#stage&#39;), { url: &#39;example.com&#39;, height: 560 });
+</code></pre>
+<p>Or without any JavaScript at all:</p>
+<pre><code class="language-html">&lt;iframe
+	src=&quot;https://three.ws/portal?url=example.com&amp;embed=1&quot;
+	width=&quot;100%&quot; height=&quot;520&quot; style=&quot;border:0;border-radius:14px&quot;
+	loading=&quot;lazy&quot; title=&quot;Walk example.com in 3D&quot;&gt;&lt;/iframe&gt;
+</code></pre>
+<p>No key, no account, no wallet. <code>fetchWorld</code> reads the public three.ws Portal API,
+which fetches the page once and caches the result for an hour.</p>
+<h2 id="how-a-page-becomes-a-place"><a class="anchor" href="#how-a-page-becomes-a-place" aria-label="Link to this section">#</a>How a page becomes a place</h2>
+<p>The mapping is fixed, documented, and testable, which is what makes a world
+predictable enough to share:</p>
+<table>
+<thead>
+<tr>
+<th>On the page</th>
+<th>In the world</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>The page itself</td>
+<td>A plaza with an obelisk carrying the title</td>
+</tr>
+<tr>
+<td>Each <code>h1</code>/<code>h2</code>/<code>h3</code> section</td>
+<td>A district with one building</td>
+</tr>
+<tr>
+<td>How many words a section has</td>
+<td>The building&#39;s height, on a log scale</td>
+</tr>
+<tr>
+<td>How many blocks it holds</td>
+<td>The building&#39;s footprint</td>
+</tr>
+<tr>
+<td>Each link</td>
+<td>A door on the building&#39;s wall. Same-site doors rebuild the world where they point; outside links open the page</td>
+</tr>
+<tr>
+<td>Each image</td>
+<td>A billboard beside the building, showing the real image</td>
+</tr>
+<tr>
+<td>Each code block</td>
+<td>A monolith: a tall, dark, emissive slab</td>
+</tr>
+<tr>
+<td><code>theme-color</code>, or the host name</td>
+<td>The palette, so a site looks like itself</td>
+</tr>
+</tbody></table>
+<p>Layout is a pure function with a seeded PRNG. Call it yourself on any outline:</p>
+<pre><code class="language-js">import { buildWorld, collidersFor } from &#39;@three-ws/portal/layout&#39;;
+
+const world = buildWorld(outline);       // no network, no DOM, no three.js
+const solids = collidersFor(world);      // circles, for your own player controller
+</code></pre>
+<h2 id="api"><a class="anchor" href="#api" aria-label="Link to this section">#</a>API</h2>
+<table>
+<thead>
+<tr>
+<th>Export</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fetchWorld(url, opts?)</code></td>
+<td>Build (or read from cache) <code>{ world, outline, cached, stale }</code></td>
+</tr>
+<tr>
+<td><code>fetchOutline(url, opts?)</code></td>
+<td>The structural read only: headings, weights, links, images</td>
+</tr>
+<tr>
+<td><code>fetchWorldGlb(url, opts?)</code></td>
+<td>The world as a glTF binary (<code>ArrayBuffer</code>)</td>
+</tr>
+<tr>
+<td><code>mountPortal(el, { url, height? })</code></td>
+<td>Mount a live walkable world into an element</td>
+</tr>
+<tr>
+<td><code>embedSnippet(url, opts?)</code></td>
+<td>The same thing as an HTML string</td>
+</tr>
+<tr>
+<td><code>describeWorld(world)</code></td>
+<td>A compact summary: districts, doors, tallest section</td>
+</tr>
+<tr>
+<td><code>buildWorld(outline, opts?)</code></td>
+<td>The pure layout function</td>
+</tr>
+<tr>
+<td><code>collidersFor(world)</code></td>
+<td>Collision circles for the solids in a world</td>
+</tr>
+<tr>
+<td><code>paletteFor(outline)</code></td>
+<td>The deterministic palette for a site</td>
+</tr>
+<tr>
+<td><code>PortalError</code></td>
+<td>Every failure, carrying the API&#39;s own <code>code</code></td>
+</tr>
+</tbody></table>
+<p><code>opts</code> accepts <code>endpoint</code> (default <code>https://three.ws/api/portal</code>), <code>fetch</code> (bring
+your own), and <code>signal</code>.</p>
+<p>Errors are typed rather than thrown as strings:</p>
+<pre><code class="language-js">import { fetchWorld, PortalError } from &#39;@three-ws/portal&#39;;
+
+try {
+	await fetchWorld(&#39;example.com/private&#39;);
+} catch (err) {
+	if (err instanceof PortalError &amp;&amp; err.code === &#39;robots_disallowed&#39;) {
+		console.log(&#39;That site asks crawlers to stay out, so Portal does.&#39;);
+	}
+}
+</code></pre>
+<p>Codes you can branch on: <code>invalid_url</code>, <code>robots_disallowed</code>, <code>blocked_host</code>,
+<code>not_html</code>, <code>no_structure</code>, <code>too_large</code>, <code>unreachable</code>, <code>upstream_status</code>,
+<code>rate_limited</code>.</p>
+<h2 id="cli"><a class="anchor" href="#cli" aria-label="Link to this section">#</a>CLI</h2>
+<pre><code class="language-bash">npx @three-ws/portal three.ws                    # the world, summarized
+npx @three-ws/portal three.ws --glb site.glb     # save it as a 3D file
+npx @three-ws/portal three.ws --json world.json  # save the world document
+npx @three-ws/portal three.ws --open             # print the walkable link
+</code></pre>
+<pre><code>  three.ws
+  24 districts · 1563 words · 42 doors (38 internal) · 2 billboards · 0 code monoliths
+
+  ███████████···········    109w  Your 3D agent. In your room.
+  █████████·············     66w  Your agents don&#39;t just talk. They trade.
+  █████·················     20w  One tag. Any site.
+</code></pre>
+<h2 id="mcp"><a class="anchor" href="#mcp" aria-label="Link to this section">#</a>MCP</h2>
+<p>An agent that fetches a page gets a wall of text. Over MCP it can ask for the
+page&#39;s <em>shape</em> instead.</p>
+<pre><code class="language-bash">claude mcp add portal -- npx -y @three-ws/portal portal-mcp
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>walk_site</code></td>
+<td>The world: districts, doors (with targets), billboards, plus a walkable link and a GLB URL</td>
+</tr>
+<tr>
+<td><code>site_shape</code></td>
+<td>The heading spine with the weight of each section. The cheap read</td>
+</tr>
+</tbody></table>
+<p>Both accept any public URL and honour the same manners as the API.</p>
+<h2 id="manners"><a class="anchor" href="#manners" aria-label="Link to this section">#</a>Manners</h2>
+<p>Portal is a crawler that runs on a person&#39;s request, and behaves like one:</p>
+<ul>
+<li><strong>It identifies itself</strong> as <code>ThreeWSPortalBot/1.0 (+https://three.ws/portal)</code>.</li>
+<li><strong>It reads robots.txt first</strong> and honours a <code>Disallow</code> for that token with a
+clean <code>robots_disallowed</code> error. Rules are matched per RFC 9309: most specific
+user-agent group, longest matching rule, <code>Allow</code> wins a tie.</li>
+<li><strong>It reads a page once.</strong> Worlds are cached for an hour fleet-wide, so a link
+shared with a thousand people is one request to the origin.</li>
+<li><strong>It is bounded</strong>: 3 MB of HTML, a 12 second deadline, and an SSRF guard that
+re-resolves the host, refuses private address ranges, and pins the socket to
+the address it validated.</li>
+</ul>
+<h2 id="license"><a class="anchor" href="#license" aria-label="Link to this section">#</a>License</h2>
+<p>Apache-2.0. Built by <a href="https://three.ws">three.ws</a>.</p>
+</main>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#why">Why</a></li><li><a href="#quick-start">Quick start</a></li><li><a href="#how-a-page-becomes-a-place">How a page becomes a place</a></li><li><a href="#api">API</a></li><li><a href="#cli">CLI</a></li><li><a href="#mcp">MCP</a></li><li><a href="#manners">Manners</a></li><li><a href="#license">License</a></li></ul></nav>
+</div>
+<footer><div class="foot-in"><span>Apache-2.0 licensed</span><a href="https://github.com/nirholas/three-ws-portal/issues">Issues</a><a href="https://github.com/nirholas/three-ws-portal/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/nirholas/three-ws-portal/security/policy">Security</a><a href="https://three.ws">Part of three.ws</a></div></footer>
+<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+var t=b.getAttribute('data-copy');var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}})});</script>
+</body>
+</html>
