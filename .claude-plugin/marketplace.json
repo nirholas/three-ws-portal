@@ -1,0 +1,19 @@
+{
+  "name": "three-ws-portal",
+  "owner": {
+    "name": "nirholas"
+  },
+  "description": "Read any public web page as structure or turn it into a walkable 3D world, over MCP or CLI.",
+  "plugins": [
+    {
+      "name": "three-ws-portal",
+      "source": "./plugin",
+      "description": "Read any public web page as structure or turn it into a walkable 3D world, over MCP or CLI.",
+      "tags": [
+        "portal",
+        "3d",
+        "mcp"
+      ]
+    }
+  ]
+}
