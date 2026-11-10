@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "portal": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "-p",
+        "@three-ws/portal",
+        "portal-mcp"
+      ]
+    }
+  }
+}
