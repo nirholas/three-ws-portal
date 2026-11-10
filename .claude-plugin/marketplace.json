@@ -7,8 +7,9 @@
   "plugins": [
     {
       "name": "three-ws-portal",
-      "source": "./plugin",
+      "source": "./plugins/three-ws-portal",
       "description": "Read any public web page as structure or turn it into a walkable 3D world, over MCP or CLI.",
+      "category": "development",
       "tags": [
         "portal",
         "3d",
